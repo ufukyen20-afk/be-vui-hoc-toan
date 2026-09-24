@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BÉ VUI HỌC TOÁN – CỘNG TRỪ TRONG PHẠM VI 20</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Segoe UI', sans-serif;
+      user-select: none;
+    }
+
+
+    body {
+      background: linear-gradient(135deg, #a8edf8 0%, #fed6e3 100%);
+      margin: 0;
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+/* 11. KURAL: BÜYÜK HESAPLAMA KUTUSU VE BUTONLAR */
+#question {
+  font-size: 42px !important;
+  font-weight: bold;
+  text-align: center;
+  background: #fff3bf;
+  padding: 20px 30px;
+  border-radius: 20px;
+  border: 4px dashed #fcc419;
+  margin-bottom: 20px;
+  color: #2f3542;
+}
+
+#options .btn {
+  font-size: 28px !important;
+  padding: 15px 0 !important;
+  min-height: 60px;
+  border-radius: 16px;
+  background: #70a1ff;
+  box-shadow: 0 6px 0 #1e90ff;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+#options .btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #1e90ff;
+}
+
+
+
+    .container {
+      background-color: #ffffff;
+      border: 6px solid #ff9ff3;
+      border-radius: 32px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+      width: 100%;
+      max-width: 550px;
+      padding: 30px 20px;
+      text-align: center;
+      position: relative;
+    }
+
+
+    /* Ses Butonu */
+    .sound-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: #f1f2f6;
+      border: 2px solid #ced6e0;
+      font-size: 22px;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #ced6e0;
+    }
+
+
+    .sound-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #ced6e0;
+    }
+
+
+    /* Başlık Alanı */
+    .rainbow-deco {
+      font-size: 32px;
+      margin-bottom: 5px;
+    }
+
+
+    h1 {
+      color: #ff4757;
+      font-size: 28px;
+      margin: 5px 0;
+      text-shadow: 2px 2px 0px #ffeaa7;
+      line-height: 1.2;
+    }
+
+
+    h2 {
+      color: #1e90ff;
+      font-size: 18px;
+      margin-top: 0;
+      margin-bottom: 25px;
+    }
+
+
+    /* Büyük Butonlar */
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+
+    .btn {
+      background-color: #ff6b81;
+      color: white;
+      border: none;
+      padding: 16px 24px;
+      font-size: 22px;
+      font-weight: bold;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 6px 0 #e84118;
+      transition: all 0.1s ease;
+      width: 90%;
+      max-width: 340px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+
+    .btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #e84118;
+    }
+
+
+    .btn-practice {
+      background-color: #2ed573;
+      box-shadow: 0 6px 0 #26af5f;
+    }
+    .btn-practice:active {
+      box-shadow: 0 2px 0 #26af5f;
+    }
+
+
+    .btn-achieve {
+      background-color: #ffa502;
+      box-shadow: 0 6px 0 #e1b12c;
+    }
+    .btn-achieve:active {
+      box-shadow: 0 2px 0 #e1b12c;
+    }
+
+
+    .decoration-footer {
+      margin-top: 25px;
+      font-size: 24px;
+    }
+#screen-mode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+#screen-mode .btn {
+  width: 80%;
+  margin: 6px auto;
+  display: block;
+}
+
+  </style>
+</head>
+<body>
+
+
+<div class="container">
+  <button class="sound-btn" id="soundBtn" onclick="toggleSound()">🔊</button>
+
+
+  <div class="rainbow-deco">🌈 ☀️ ✏️</div>
+  <h1>BÉ VUI HỌC TOÁN</h1>
+  <h2>CỘNG – TRỪ TRONG PHẠM VI 20</h2>
+
+
+  <div class="btn-group" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+  <button class="btn" onclick="playSound('click'); showScreen('screen-mode')">
+    <span>▶</span> BẮT ĐẦU CHƠI
+  </button>
+  <button class="btn btn-practice" onclick="playSound('click'); selectMode('mix'); startGameWithDifficulty('medium');">
+    <span>🌈</span> LUYỆN TẬP
+  </button>
+  <button class="btn btn-achieve" onclick="playSound('click'); showScreen('screen-game'); showFinalResult();">
+    <span>⭐</span> THÀNH TÍCH
+  </button>
+<div style="text-align: center; font-size: 12px; color: #666; margin-top: 10px;">
+  💻 Thiết kế & Lập trình: Atar Ufuk © 2026
+</div>
+
+</div>
+
+
+    <!-- 2. MOD VE ZORLUK SEÇİM EKRANI (6. ve 9. KURAL) -->
+  <div id="screen-mode" style="display:none; flex-direction:column; align-items:center; width:100%;">
+    
+    <!-- 1. Aşama: İşlem Türü Seçimi -->
+    <div id="mode-step-1" style="display:flex; flex-direction:column; align-items:center; width:100%;">
+      <h2>CHỌN PHÉP TÍNH</h2>
+     <button class="btn" onclick="playSound('click'); selectMode('plus')"> Phép cộng (+)</button>
+<button class="btn" onclick="playSound('click'); selectMode('minus')"> Phép trừ (-)</button>
+<button class="btn" style="background:#ffa502;" onclick="playSound('click'); selectMode('mix')"> Cộng và trừ (+ & -)</button>
+<br>
+<button class="btn" style="background:#a4b0be; box-shadow:0 5px 0 #747d8c;" onclick="playSound('click'); showScreen('screen-welcome')">🏠 Quay lại</button>
+
+    </div>
+
+
+    <!-- 2. Aşama: Zorluk Seviyesi Seçimi -->
+    <div id="mode-step-2" style="display:none; flex-direction:column; align-items:center; width:100%;">
+      <h2>CHỌN MỨC ĐỘ</h2>
+      <button class="btn" style="background:#2ed573;" onclick="playSound('click');startGameWithDifficulty('easy')">🟢 Dễ</button>
+      <button class="btn" style="background:#ffa502;" onclick="playSound('click');startGameWithDifficulty('medium')">🟠 Vừa</button>
+      <button class="btn" style="background:#ff4757;" onclick="playSound('click');startGameWithDifficulty('hard')">🔴 Khó</button>
+      <br>
+      <button class="btn" style="background:#a4b0be; box-shadow:0 5px 0 #747d8c;" onclick="playSound('click');backToStep1()">⬅️ Quay lại</button>
+    </div>
+
+
+  </div>
+
+
+
+  <!-- 3. OYUN EKRANI (7. KURAL) -->
+  <div id="screen-game" style="display:none; flex-direction:column; align-items:center; width:100%;">
+    <div style="font-size: 20px; font-weight: bold; margin-bottom: 10px; display: flex; justify-content: space-between; width: 80%;">
+  <span>📝 Câu: <span id="question-count">1</span>/10</span>
+  <span>⭐ Điểm: <span id="score">0</span>/10</span>
+</div>
+
+    
+    <!-- Büyük Hesaplama Kutusu -->
+    <div id="question" style="font-size: 36px; font-weight: bold; background: #fff3bf; padding: 15px 25px; border-radius: 16px; border: 3px dashed #fcc419; margin-bottom: 20px;">
+      7 + 5 = ?
+    </div>
+
+    <!-- Cevap Option Butonları -->
+    <div id="options" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 80%; margin-bottom: 15px;">
+      <!-- Butonlar JavaScript ile dinamik oluşacak -->
+    </div>
+
+    <!-- Geri Bildirim Mesajı -->
+    <div id="feedback" style="font-size: 18px; font-weight: bold; min-height: 25px; margin-bottom: 10px;"></div>
+
+    <button class="btn" style="background:#a4b0be; box-shadow:0 5px 0 #747d8c; width: 60%;" onclick="showScreen('screen-mode')">🏠 Chọn lại</button>
+  </div>
+
+  <div class="decoration-footer">⭐ 📚 🎨 🧸 ⭐</div>
+</div>
+
+
+<script>
+document.getElementById('screen-game').style.display = 'none';
+  let soundEnabled = true;
+let currentMode = 'plus';
+let currentDifficulty = 'easy';
+let score = 0;
+let streak = 0; // Arda arda doğru cevap sayacı
+let badgeCount = 0; // Kazanılan rozet sayısı
+let currentQuestionIndex = 0;
+const totalQuestions = 10;
+let correctAnswersCount = 0;
+let isFirstAttempt = true; // İlk deneme kontrolü
+let bgmInterval = null;
+
+function startBGM() {
+  if (!soundEnabled || bgmInterval) return;
+  
+  // Eğlenceli, hareketli ve çocuksu melodi dizilimi (Nota frekansları)
+  const melody = [
+    523.25, 659.25, 783.99, 1046.50, // C5, E5, G5, C6 (Yükselen neşeli ton)
+    783.99, 659.25, 523.25, 659.25,
+    587.33, 698.46, 880.00, 698.46,  // D5, F5, A5, F5
+    523.25, 587.33, 659.25, 783.99   // C5, D5, E5, G5
+  ]; 
+  let noteIndex = 0;
+
+  bgmInterval = setInterval(() => {
+    if (!soundEnabled) return;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    
+    // 'sine' veya 'triangle' tonu çocuk oyunları için daha tatlı ve yumuşaktır
+    osc.type = 'triangle'; 
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    const now = audioCtx.currentTime;
+    osc.frequency.setValueAtTime(melody[noteIndex], now);
+    
+    // Kısık ses seviyesi (arka planda tatlıca çalar)
+    gain.gain.setValueAtTime(0.025, now); 
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+
+    osc.start(now);
+    osc.stop(now + 0.18);
+
+    noteIndex = (noteIndex + 1) % melody.length;
+  }, 200); // Ritmi hızlandırdık (daha canlı ve eğlenceli)
+}
+
+
+function stopBGM() {
+  if (bgmInterval) {
+    clearInterval(bgmInterval);
+    bgmInterval = null;
+  }
+}
+
+// Web Audio API ile Ses Efektleri
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+function playSound(type) {
+  if (!soundEnabled) return;
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  const now = audioCtx.currentTime;
+
+  if (type === 'start') { // Başlangıç Sesi
+    osc.frequency.setValueAtTime(300, now);
+    osc.frequency.exponentialRampToValueAtTime(600, now + 0.2);
+    gain.gain.setValueAtTime(0.15, now);
+    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+    osc.start(now); osc.stop(now + 0.2);
+  } else if (type === 'correct') { // Doğru Cevap Sesi
+    osc.frequency.setValueAtTime(523.25, now);
+    osc.frequency.setValueAtTime(659.25, now + 0.1);
+    gain.gain.setValueAtTime(0.2, now);
+    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+    osc.start(now); osc.stop(now + 0.3);
+    } else if (type === 'wrong') { // Yanlış Cevap Sesi (Çizgi Film Tarzı Tatlı Düşüş)
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(220, now);
+    osc.frequency.linearRampToValueAtTime(150, now + 0.15);
+    gain.gain.setValueAtTime(0.12, now);
+    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+    osc.start(now); osc.stop(now + 0.3);
+
+      } else if (type === 'win') { // Alkış ve Zafer Sesi
+    const bufferSize = audioCtx.sampleRate * 1.2;
+    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = Math.random() * 2 - 1;
+    }
+    const noise = audioCtx.createBufferSource();
+    noise.buffer = buffer;
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.value = 1200;
+    const gain = audioCtx.createGain();
+    gain.gain.setValueAtTime(0.15, now);
+    gain.gain.exponentialRampToValueAtTime(0.01, now + 1.2);
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(audioCtx.destination);
+    noise.start(now);
+
+    const winOsc = audioCtx.createOscillator();
+    const winGain = audioCtx.createGain();
+    winOsc.type = 'triangle';
+    winOsc.frequency.setValueAtTime(523.25, now);
+    winOsc.frequency.setValueAtTime(659.25, now + 0.15);
+    winOsc.frequency.setValueAtTime(783.99, now + 0.30);
+    winOsc.frequency.setValueAtTime(1046.50, now + 0.45);
+    winGain.gain.setValueAtTime(0.2, now);
+    winGain.gain.exponentialRampToValueAtTime(0.01, now + 1.2);
+    winOsc.connect(winGain);
+    winGain.connect(audioCtx.destination);
+    winOsc.start(now);
+    winOsc.stop(now + 1.2);
+
+
+} else if (type === 'click') { // <- BURAYA EKLENECEK
+    osc.frequency.setValueAtTime(400, now);
+    gain.gain.setValueAtTime(0.08, now);
+    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+    osc.start(now); osc.stop(now + 0.05);
+  }
+}
+
+
+function toggleSound() {
+  soundEnabled = !soundEnabled;
+  if (!soundEnabled) stopBGM();
+  document.getElementById('soundBtn').innerText = soundEnabled ? '🔊' : '🔇';
+}
+
+
+function showScreen(screenId) {
+  document.querySelector('.btn-group').style.display = 'none';
+  document.getElementById('screen-mode').style.display = 'none';
+  document.getElementById('screen-game').style.display = 'none';
+
+  if (screenId === 'screen-welcome') {
+stopBGM();
+    document.querySelector('.btn-group').style.display = 'flex';
+  } else if (screenId === 'screen-mode') {
+stopBGM();
+    document.getElementById('screen-mode').style.display = 'flex';
+    backToStep1();
+  } else if (screenId === 'screen-game') {
+    document.getElementById('screen-game').style.display = 'flex';
+  }
+}
+
+function selectMode(mode) {
+  currentMode = mode;
+  document.getElementById('mode-step-1').style.display = 'none';
+  document.getElementById('mode-step-2').style.display = 'flex';
+}
+
+function backToStep1() {
+  document.getElementById('mode-step-1').style.display = 'flex';
+  document.getElementById('mode-step-2').style.display = 'none';
+}
+
+function startGameWithDifficulty(difficulty) {
+  playSound('start');
+  stopBGM();
+  startBGM();
+  
+  currentDifficulty = difficulty;
+  score = 0;
+  streak = 0;
+  correctAnswersCount = 0;
+  badgeCount = 0;
+  currentQuestionIndex = 0;
+  
+  document.getElementById('score').innerText = score;
+  
+  // ÖNEMLİ: Oyun ekranına geçerken soru kutusunu ve şıkları kesin olarak tekrar görünür yapıyoruz
+  let qBox = document.getElementById('question');
+  if (qBox) qBox.style.display = 'block';
+  
+  let optBox = document.getElementById('options');
+  if (optBox) optBox.style.display = 'grid';
+
+  // Feedback alanını temizle (raporu kaldır)
+  document.getElementById('feedback').innerHTML = '';
+
+  showScreen('screen-game');
+  nextQuestion();
+}
+
+
+function nextQuestion() {
+  if (currentQuestionIndex >= totalQuestions) {
+    showFinalResult();
+    return;
+  }
+
+  currentQuestionIndex++;
+  isFirstAttempt = true; // Yeni soruda ilk deneme bayrağını sıfırla
+  document.getElementById('question-count').innerText = currentQuestionIndex;
+  generateQuestion();
+}
+
+function generateQuestion() {
+  let qBox = document.getElementById('question');
+  
+  // Kutuyu konsolda olduğu gibi zorla görünür yapıyoruz:
+  qBox.style.cssText = "display: block !important; visibility: visible !important; opacity: 1 !important;";
+
+  document.getElementById('feedback').innerText = '';
+  let num1, num2, isPlus;
+
+  if (currentMode === 'plus') isPlus = true;
+  else if (currentMode === 'minus') isPlus = false;
+  else isPlus = Math.random() > 0.5;
+
+  if (currentDifficulty === 'easy') {
+    if (isPlus) {
+      num1 = Math.floor(Math.random() * 6) + 1;
+      num2 = Math.floor(Math.random() * (11 - num1));
+    } else {
+      num1 = Math.floor(Math.random() * 10) + 1;
+      num2 = Math.floor(Math.random() * (num1 + 1));
+    }
+  } else if (currentDifficulty === 'medium') {
+    if (isPlus) {
+      num1 = Math.floor(Math.random() * 6) + 5;
+      num2 = Math.floor(Math.random() * 6) + 2;
+    } else {
+      num1 = Math.floor(Math.random() * 6) + 12;
+      num2 = Math.floor(Math.random() * 6) + 5;
+    }
+  } else {
+    if (isPlus) {
+      num1 = Math.floor(Math.random() * 5) + 7;
+      num2 = Math.floor(Math.random() * 5) + 6;
+    } else {
+      num1 = Math.floor(Math.random() * 6) + 15;
+      num2 = Math.floor(Math.random() * 6) + 6;
+    }
+  }
+
+  if (isPlus) {
+    correctAnswer = num1 + num2;
+    document.getElementById('question').innerText = `${num1} + ${num2} = ?`;
+  } else {
+    correctAnswer = num1 - num2;
+    document.getElementById('question').innerText = `${num1} - ${num2} = ?`;
+  }
+
+  generateOptions();
+}
+
+function generateOptions() {
+  let options = [correctAnswer];
+  while (options.length < 4) {
+    let wrong = Math.floor(Math.random() * 21);
+    if (!options.includes(wrong)) {
+      options.push(wrong);
+    }
+  }
+
+  options.sort(() => Math.random() - 0.5);
+
+  let optionsContainer = document.getElementById('options');
+  optionsContainer.innerHTML = '';
+
+  options.forEach(opt => {
+    let btn = document.createElement('button');
+    btn.className = 'btn';
+    btn.style.margin = '0';
+    btn.innerText = opt;
+    btn.onclick = () => checkAnswer(opt, btn);
+    optionsContainer.appendChild(btn);
+  });
+}
+
+// CEVAP KONTROLÜ VE ÖDÜL SİSTEMİ (10. KURAL)
+function checkAnswer(selected, button) {
+  let feedback = document.getElementById('feedback');
+
+  if (selected === correctAnswer) {
+playSound('correct');
+    let badgeMessage = '';
+    
+    if (isFirstAttempt) {
+      score++;
+      streak++;
+correctAnswersCount++;
+      document.getElementById('score').innerText = score;
+
+      // Rozet Kontrolleri (3 ve 5 ardışık doğru)
+      if (streak === 3) {
+        badgeCount += 1;
+        badgeMessage = ' 🏅 (Nhận 1 huy hiệu!)';
+      } else if (streak === 5) {
+        badgeCount += 2;
+        badgeMessage = ' 🏅🏅 (Nhận 2 huy hiệu!)';
+      }
+    }
+
+    feedback.innerText = `🎉 Chính xác! (+1 ⭐)${badgeMessage}`;
+    feedback.style.color = '#2ed573';
+
+    setTimeout(() => {
+      nextQuestion();
+    }, 1200);
+  } else {
+playSound('wrong');
+    // Yanlış cevapta seriyi sıfırla, tekrar denemesine izin ver
+    streak = 0;
+    isFirstAttempt = false;
+    feedback.innerText = '❌ Chưa đúng, con thử lại nhé!';
+    feedback.style.color = '#ff4757';
+  }
+}
+
+function showFinalResult() {
+  stopBGM();
+  playSound('win');
+  
+  // Soru kutusunu gizle
+  let questionContainer = document.getElementById('question');
+  if (questionContainer) questionContainer.style.display = 'none';
+
+  // Şıklar kutusunu gizle ki alt alta binmesinler
+  let optionsContainer = document.getElementById('options');
+  if (optionsContainer) optionsContainer.style.display = 'none';
+
+  let feedback = document.getElementById('feedback');
+  
+  let totalQuestions = 10;
+  let correct = correctAnswersCount;
+  let wrong = totalQuestions - correct;
+  let percentage = Math.round((correct / totalQuestions) * 100);
+
+  feedback.innerHTML = `
+    <div style="font-size: 20px; font-weight: bold; color: #2ed573; margin-bottom: 10px;">
+      📊 BÁO CÁO GIÁO VIÊN / PHỤ HUYNH
+    </div>
+    <div style="font-size: 16px; text-align: left; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; line-height: 1.8; margin-bottom: 15px;">
+      📌 <b>Tổng số câu:</b> ${totalQuestions}<br>
+      ✅ <b>Số câu đúng:</b> ${correct}<br>
+      ❌ <b>Số câu sai:</b> ${wrong}<br>
+      ⭐ <b>Điểm số:</b> ${score}<br>
+      🎯 <b>Tỉ lệ đúng:</b> %${percentage}
+    </div>
+    <div style="display: flex; justify-content: center;">
+      <button onclick="startGameWithDifficulty(currentDifficulty)" style="padding: 10px 20px; background: #2ed573; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold;">🔄 Chơi lại</button>
+    </div>
+  `;
+}
+
+
+
+
+
+
+
+
+
+</script>
+
+
+</body>
+</html>
+
