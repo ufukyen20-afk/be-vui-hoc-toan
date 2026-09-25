@@ -247,8 +247,8 @@
   <!-- 3. OYUN EKRANI (7. KURAL) -->
   <div id="screen-game" style="display:none; flex-direction:column; align-items:center; width:100%;">
     <div style="font-size: 20px; font-weight: bold; margin-bottom: 10px; display: flex; justify-content: space-between; width: 80%;">
-  <span>📝 Câu: <span id="question-count">1</span>/10</span>
-  <span>⭐ Điểm: <span id="score">0</span>/10</span>
+  <span>📝 Câu: <span id="question-count">1</span>/20</span>
+  <span>⭐ Điểm: <span id="score">0</span>/20</span>
 </div>
 
     
@@ -611,7 +611,7 @@ function showFinalResult() {
 
   let feedback = document.getElementById('feedback');
   
-  let totalQuestions = 10;
+  let totalQuestions = 20;
   let correct = correctAnswersCount;
   let wrong = totalQuestions - correct;
   let percentage = Math.round((correct / totalQuestions) * 100);
